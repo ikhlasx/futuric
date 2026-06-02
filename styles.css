@@ -1,0 +1,636 @@
+:root {
+    --color-bg: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-text-primary: #111827;
+    --color-text-secondary: #4b5563;
+    --color-brand-accent: #0f172a;
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+    margin: 0; padding: 0;
+    font-family: var(--font-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Editorial Film Grain Overlay */
+.noise-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+}
+
+.section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.section-title {
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    margin-bottom: 3.5rem;
+    color: var(--color-brand-accent);
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    transition: transform 0.4s var(--easing);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.nav-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+.logo img {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+    /* Optional: Since it's a white logo on a white navbar, using a slight drop-shadow or invert if they want dark text */
+    /* Wait, I'll apply filter: invert(1) so it becomes a dark logo against the white background. 
+       If they want it white, it's invisible without invert unless it has deep shadows */
+    filter: invert(1);
+    mix-blend-mode: normal;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--color-text-primary);
+}
+
+.btn-primary {
+    background: var(--color-brand-accent);
+    color: #fff;
+    padding: 0.9rem 2.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.4s var(--easing);
+    display: inline-block;
+    border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--color-brand-accent);
+    border-color: var(--color-brand-accent);
+    transform: translateY(-2px);
+}
+
+/* Animations Default Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s var(--easing);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: flex-end; /* Drop content to the bottom */
+    padding-bottom: 6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.hero-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Subtle dark gradient coming up from the bottom for perfect readability without obscuring the photo */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 35%, transparent 65%);
+    z-index: -1;
+}
+
+.hero-content {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 4rem;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 4rem;
+}
+
+.hero-text-main {
+    flex: 1 1 55%;
+}
+
+.hero-text-sub {
+    flex: 1 1 45%;
+    max-width: 550px;
+    padding-bottom: 0.5rem;
+}
+
+.hero h1 {
+    font-size: clamp(3.5rem, 5vw, 5rem);
+    font-weight: 300; /* Swiss minimalist thin weight */
+    line-height: 1.05;
+    margin-bottom: 0;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+}
+
+.hero p {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex; gap: 1.5rem;
+}
+
+.hero .btn-primary {
+    background: #ffffff;
+    color: #111827;
+}
+
+.hero .btn-primary:hover {
+    background: rgba(255,255,255,0.8);
+    color: #111827;
+}
+
+.btn-secondary {
+    padding: 0.9rem 2.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: all 0.4s var(--easing);
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Business Showcase Selector (Land Rover Style) */
+.business-section {
+    padding: 10rem 0;
+    background: var(--color-bg); 
+}
+
+.business-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 6rem;
+    align-items: stretch;
+    height: 750px;
+}
+
+.business-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 2rem;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.business-selector .section-title {
+    margin-bottom: 4rem;
+}
+
+.business-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-left: 0;
+}
+
+.business-item {
+    cursor: pointer;
+    position: relative;
+    padding-left: 2rem;
+    transition: all 0.4s var(--easing);
+}
+
+.business-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0%;
+    background: var(--color-brand-accent);
+    transition: height 0.4s var(--easing);
+}
+
+.business-item h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    transition: color 0.4s var(--easing);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.brand-side-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 0.2rem;
+    opacity: 0.7;
+    transition: opacity 0.4s var(--easing), transform 0.4s var(--easing);
+    /* Safe drop shadow to ensure white or outlined logos sit cleanly on the light sidebar */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.business-item:hover .brand-side-logo {
+    opacity: 0.9;
+}
+.business-item.active .brand-side-logo {
+    opacity: 1;
+}
+
+.business-item p {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: transparent;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.4s var(--easing);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.business-item:hover h3 {
+    color: var(--color-text-primary);
+}
+
+.business-item.active::before {
+    height: 100%;
+}
+
+.business-item.active h3 {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.business-item.active p {
+    color: var(--color-text-secondary);
+    height: 20px;
+    margin-top: 0.5rem;
+}
+
+.business-display {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: 0 40px 100px -10px rgba(0,0,0,0.06);
+}
+
+.business-panel {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s var(--easing);
+    display: flex;
+    flex-direction: column;
+}
+
+.business-panel.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.panel-image {
+    flex: 1;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transform: scale(1.04);
+    transition: transform 1.2s var(--easing);
+    transform-origin: top center;
+}
+
+.business-panel.active .panel-image {
+    transform: scale(1);
+}
+
+.panel-content {
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem 3rem;
+    max-width: none;
+    background: var(--color-surface);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.8s var(--easing);
+    transition-delay: 0.1s;
+    
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem 3rem;
+    align-items: center;
+}
+
+.business-panel.active .panel-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.panel-content h2 {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    font-size: 1.8rem;
+    margin-bottom: 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.panel-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.panel-content .panel-actions {
+    grid-column: 2 / 3;
+    grid-row: 1;
+    justify-self: end;
+}
+
+/* About Section */
+.about-section {
+    padding: 8rem 0;
+    background: var(--color-surface);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+}
+
+.footer {
+    padding: 6rem 0;
+    background: var(--color-brand-accent);
+    color: #fff;
+}
+.footer h2 { margin: 0; }
+.footer-grid { display: flex; justify-content: space-between;}
+.footer-links a { color: #fff; text-decoration: none; }
+
+/* =========================================
+   WIREFRAME PLACEHOLDER SECTIONS 
+   ========================================= */
+
+.wireframe-section {
+    padding: 6rem 0;
+    background: #ffffff;
+    border-top: 1px solid #f0f0f0;
+}
+.wf-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+.wf-orange {
+    background-color: #FF5722;
+}
+.wf-gray {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+}
+.wf-dark {
+    background-color: #1a1a1a;
+}
+.wf-box {
+    border-radius: 12px;
+}
+
+/* Section 1: Product Spotlight */
+.wf-spotlight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+.wf-spotlight .wf-title {
+    width: 300px;
+    height: 40px;
+    border-radius: 4px;
+}
+.wf-spotlight .wf-subtitle {
+    width: 500px;
+    height: 20px;
+    border-radius: 4px;
+}
+.wf-spotlight .wf-dashboard {
+    width: 100%;
+    height: 500px;
+    margin-top: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Section 2: Chat Bubbles */
+.wf-chat-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+.wf-chat-bubble {
+    width: 60%;
+    height: 120px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+.wf-chat-bubble:nth-child(even) {
+    align-self: flex-end;
+    border: 2px solid #FF5722;
+    background-color: transparent;
+}
+.wf-chat-bubble:nth-child(odd) {
+    align-self: flex-start;
+}
+
+/* Section 3: Comparison Table */
+.wf-comparison-title {
+    width: 400px;
+    height: 40px;
+    margin: 0 auto 3rem auto;
+    border-radius: 4px;
+}
+.wf-comparison-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    text-align: center;
+}
+.wf-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.wf-cell {
+    height: 60px;
+    border-radius: 8px;
+}
+.wf-col.highlight .wf-cell {
+    background-color: #FF5722;
+}
+
+/* Section 4: Deep Handle Console */
+.wf-console {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+.wf-console-left {
+    height: 300px;
+}
+.wf-console-right {
+    height: 400px;
+}
+
+/* Section 5: Integration Vertical Timeline */
+.wf-integration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+}
+.wf-integration::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 4px;
+    background-color: #FF5722;
+    transform: translateX(-50%);
+}
+.wf-step {
+    width: 300px;
+    height: 150px;
+    z-index: 1;
+    position: relative;
+    border-radius: 12px;
+}
+.wf-step:nth-child(odd) {
+    margin-right: 400px;
+}
+.wf-step:nth-child(even) {
+    margin-left: 400px;
+}
+
+/* Section 6: Cards */
+.wf-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+.wf-card {
+    height: 300px;
+    border-top: 4px solid #FF5722;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Section 7: FAQ Accordion */
+.wf-faq-container {
+    padding: 6rem 0;
+}
+.wf-faq-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem;
+    border-radius: 20px;
+}
+.wf-faq-item {
+    height: 60px;
+    background-color: rgba(255,255,255,0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
