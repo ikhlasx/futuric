@@ -71,7 +71,9 @@ const BusinessSelector = () => {
                                         <h2>{panel.title}</h2>
                                         <p className="panel-desc">{panel.desc}</p>
                                         <div className="panel-actions">
-                                            <a href="#" className="btn-primary">Visit Website</a>
+                                            <a href={key === 'nexa' ? 'https://nexafuturic.com' : '#'} target={key === 'nexa' ? '_blank' : '_self'} rel={key === 'nexa' ? 'noopener noreferrer' : ''} className="btn-primary">
+                                                Visit Website
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

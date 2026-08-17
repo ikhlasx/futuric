@@ -36,7 +36,7 @@ const Hero = () => {
                     <p>A premium strategic parent brand driving intelligent industrial ecosystems and high-end services.</p>
                     <div className="hero-actions">
                         <a href="#businesses" className="btn-primary">Explore Ventures</a>
-                        <a href="#contact" className="btn-secondary">Contact Us</a>
+                        <a href="#contact-cta" className="btn-secondary">Contact Us</a>
                     </div>
                 </div>
             </div>

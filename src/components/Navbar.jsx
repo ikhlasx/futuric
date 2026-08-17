@@ -9,11 +9,12 @@ const Navbar = () => {
                 </a>
                 <div className="nav-links">
                     <a href="#businesses">Ventures</a>
+                    <a href="#nexa-flagship">NEXA</a>
                     <a href="#about">About</a>
                     <a href="#leadership">Leadership</a>
                 </div>
                 <div className="nav-actions">
-                    <a href="#contact" className="btn-primary">Connect</a>
+                    <a href="#contact-cta" className="btn-primary" style={{ padding: '0.6rem 1.5rem' }}>Connect</a>
                 </div>
             </div>
         </nav>
