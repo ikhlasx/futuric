@@ -1,75 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, ChevronDown, Menu, X, Factory, Cpu, Eye, Bot, Cloud, ShieldCheck, Gauge, Network, CheckCircle2, MapPin, Mail, Phone, Sparkles } from 'lucide-react';
+import App from './App';
 import './styles.css';
 
-const ventures = [
-  {name:'NEXA', tag:'Smart Factory Transformation', desc:'A premium Industry 4.0 platform driving smart factory transformation and connected operations.', active:true},
-  {name:'AugMind', tag:'Secure Intelligence Platform', desc:'A secure AI workflow and documentation intelligence platform for high-complexity enterprise environments.'},
-  {name:'Forma', tag:'Premium Digital Products', desc:'A premium software development wing for custom digital products, scalable platforms and enterprise systems.'},
-  {name:'HardRock', tag:'Luxury Home Automation', desc:'A premium home automation brand uniting lighting, security, climate and connected lifestyle systems.'},
-  {name:'Oryx Visa', tag:'Global Mobility Services', desc:'A premium visa support service focused on clarity, guidance and confidence through complex applications.'}
-];
-
-const capabilities = [
-  ['Strategy with a Ship Date','We convert challenges into a clear execution plan: roadmap, timeline and ROI.'],
-  ['Everything Connected','IoT links machines, sensors and software so live data can drive instant decisions.'],
-  ['Custom Automation','Robotics and systems are engineered around your workflow, not forced into templates.'],
-  ['Artificial Intelligence','Computer vision detects defects as they occur and enables predictive insight.'],
-  ['Unified Platform','Machines and software are unified into one ecosystem, one dashboard and full control.']
-];
-
-const industries = [
- ['Electronics','High-speed connected production lines; precision control and defect elimination with AI; real-time quality and yield analytics; reduced downtime through predictive insights.'],
- ['Pharma / Healthcare','Sterile, validated automation for filling and packaging; digital traceability for compliance and batch quality; environmental control and contamination prevention; intelligent scheduling.'],
- ['Food / Beverage','Digitised operations from mixing to packaging; energy, quality and safety visibility; increased throughput through flow optimisation; reduced variability using real-time feedback.'],
- ['Chemical Manufacturing','Automation for batching, mixing and hazardous handling; process and utilisation optimisation; consistent quality; compliance monitoring and safety assurance.'],
- ['Oil / Gas','IoT monitoring of pipelines, assets and stations; predictive analytics; environmental and regulatory visibility; maintenance and asset performance control.'],
- ['Smart Farming','IoT automation for equipment and irrigation; AI insights on soil, crop health and yield; reduced inputs through precision; real-time monitoring and autonomous adjustments.']
-];
-
-const delivery = [
- ['01','Discovery & Assessment','Onsite or virtual sessions to understand goals, challenges, current systems and workflows.'],
- ['02','Roadmap & Proposal','Define solution vision and KPIs, prepare project plan and cost estimate, align roles and resources.'],
- ['03','Pilot & Validation','Launch a focused use case, measure impact, refine scope and build confidence for scaling.'],
- ['04','Build & Deploy','Assemble the cross-functional team, develop, test and integrate systems with agile delivery.'],
- ['05','Launch & Training','Commission the solution, train teams and supervisors, and track performance against KPIs.'],
- ['06','Maintenance & Aftercare','Ongoing monitoring, support, health checks, updates and continuous optimisation.']
-];
-
-const leadership = [
- ['Dr Ashique Ahmed','Chief Executive Officer','Defines program vision, establishes governance frameworks and drives measurable outcomes.'],
- ['Mohammed Sehil Elayoden','Chief Technology Officer','Leads technical architecture and the technology direction of the program.'],
- ['Yogesh Ravichandran','Director – Operations','Oversees site readiness, deployment logistics, client adoption and handover.'],
- ['Sohaj Elayodan','Director – Strategy, Brand & People','Shapes strategic direction, brand identity, people experience, partnerships and product vision.'],
- ['Ikhlas Pv','Head of AI & Vision Systems','Designs core ML and vision systems and builds scalable models for factory performance.']
-];
-
-function useReveal(){useEffect(()=>{const els=document.querySelectorAll('.reveal'); const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12}); els.forEach(e=>io.observe(e)); return()=>io.disconnect()},[])}
-
-function Nav(){const [open,setOpen]=useState(false); return <header className="nav"><a href="#top" className="brand"><img src="/images/logo-futuric-transparent.png" alt="Futuric" style={{height:'24px', width:'auto'}}/></a><nav className={open?'open':''}><a href="#ventures" onClick={()=>setOpen(false)}>Ventures</a><a href="#nexa" onClick={()=>setOpen(false)}>NEXA</a><a href="#about" onClick={()=>setOpen(false)}>About</a><a href="#leadership" onClick={()=>setOpen(false)}>Leadership</a><a href="#contact" onClick={()=>setOpen(false)} className="nav-cta">Connect <ArrowUpRight size={16}/></a></nav><button className="menu" onClick={()=>setOpen(!open)} aria-label="Menu">{open?<X/>:<Menu/>}</button></header>}
-
-function Hero(){return <section className="hero" id="top"><div className="hero-grid"></div><div className="hero-orb orb1"></div><div className="hero-orb orb2"></div><div className="hero-inner"><div className="eyebrow"><span></span> INTELLIGENT INDUSTRIAL ECOSYSTEMS</div><h1>Building the<br/><em>Future</em> of Enterprise.</h1><p>A premium strategic parent brand driving intelligent industrial ecosystems and high-end services.</p><div className="actions"><a className="btn primary" href="#ventures">Explore Ventures <ArrowUpRight size={17}/></a><a className="btn ghost" href="#contact">Contact Us</a></div></div><div className="hero-meta"><span>FUTURIC / 01</span><span>ENGINEERING · INTELLIGENCE · DESIGN</span></div></section>}
-
-function Ventures(){const [active,setActive]=useState(0); return <section className="section ventures" id="ventures"><div className="section-head reveal"><div><div className="eyebrow">UNAPOLOGETIC IN PRESENCE</div><h2>One group.<br/><em>Many advantages.</em></h2></div><p>Futuric creates specialised ventures around the systems that shape modern enterprise — from intelligent factories to digital products and premium services.</p></div><div className="venture-layout reveal"><div className="venture-list">{ventures.map((v,i)=><button key={v.name} className={active===i?'selected':''} onClick={()=>setActive(i)}><span>0{i+1}</span><div><strong>{v.name}</strong><small>{v.tag}</small></div><ArrowUpRight size={18}/></button>)}</div><div className="venture-panel"><div className="panel-glow"></div><div className="panel-top"><span>VENTURE / 0{active+1}</span><span>FUTURIC</span></div><div className="panel-content"><div className="monogram">{ventures[active].name.slice(0,2).toUpperCase()}</div><div><div className="eyebrow">{ventures[active].tag}</div><h3>{ventures[active].name}<span> by Futuric</span></h3><p>{ventures[active].desc}</p><a href={active===0?'#nexa':'#contact'} className="text-link">{active===0?'Explore NEXA':'Discuss this venture'} <ArrowUpRight size={17}/></a></div></div></div></div></section>}
-
-function Nexa(){return <><section className="nexa-hero" id="nexa"><div className="nexa-lines"></div><div className="section-inner reveal"><div className="nexa-kicker"><span>NEXA</span><span>POWERED BY FUTURIC</span></div><h2>Tomorrow's factory.<br/><em>Built today.</em></h2><p>Designed for those who build what's next. NEXA integrates IoT, AI, robotics, computer vision and cloud systems to connect every machine into a unified, self-optimising ecosystem.</p><div className="metric-row"><div><b>01</b><span>One connected system</span></div><div><b>02</b><span>Live operational data</span></div><div><b>03</b><span>Predictive intelligence</span></div><div><b>04</b><span>Scalable automation</span></div></div></div></section>
-<section className="section dark-section"><div className="section-head reveal"><div><div className="eyebrow">AREAS OF EXPERTISE</div><h2>What we build.<br/><em>How you win.</em></h2></div><p>From strategy to deployment, NEXA combines engineering disciplines into one connected operating model.</p></div><div className="cap-grid reveal">{capabilities.map(([t,d],i)=><article key={t}><div className="cap-icon">{React.createElement([Factory,Network,Bot,Eye,Cpu][i], {size:21})}</div><span>0{i+1}</span><h3>{t}</h3><p>{d}</p></article>)}</div></section>
-<section className="section" id="industries"><div className="section-head reveal"><div><div className="eyebrow">INDUSTRY APPLICATIONS</div><h2>Industries<br/><em>we transform.</em></h2></div><p>Cross-industry smart factory systems built around the realities of production, quality, maintenance and operational performance.</p></div><div className="industry-grid reveal">{industries.map(([t,d],i)=><article key={t}><span>0{i+1}</span><h3>{t}</h3><p>{d}</p><div className="card-arrow"><ArrowUpRight size={17}/></div></article>)}</div></section>
-<section className="section dark-section" id="delivery"><div className="section-head reveal"><div><div className="eyebrow">DELIVERY APPROACH</div><h2>Discovery to<br/><em>delivery.</em></h2></div><p>A staged path designed to prove value early, reduce deployment risk and build confidence before scaling.</p></div><div className="timeline reveal">{delivery.map(([n,t,d])=><article key={n}><div className="num">{n}</div><div><h3>{t}</h3><p>{d}</p></div></article>)}</div></section>
-<section className="section metrics"><div className="section-head reveal"><div><div className="eyebrow">PERFORMANCE INSIGHTS</div><h2>Metrics that<br/><em>matter.</em></h2></div><p>KPIs are defined from the start: cycle time, yield, scrap, uptime and OEE. Continuous tracking turns every gap into the next improvement target.</p></div><div className="metrics-grid reveal"><div className="big-metric"><strong>OEE</strong><span>Availability × Performance × Quality</span><p>One metric for understanding the health of production.</p></div><div className="metric-card"><Gauge/><b>Cycle Time</b><span>Track process speed and identify bottlenecks.</span></div><div className="metric-card"><CheckCircle2/><b>Yield</b><span>Improve output quality and reduce waste.</span></div><div className="metric-card"><ShieldCheck/><b>Uptime</b><span>Use predictive insight to reduce unplanned downtime.</span></div></div></section>
-<section className="section dark-section" id="why"><div className="section-head reveal"><div><div className="eyebrow">WHY NEXA · WHY NOW</div><h2>Built for the<br/><em>real world.</em></h2></div><p>Technology should reduce complexity, not create another layer of it. NEXA is designed around your process and the systems already on your floor.</p></div><div className="why-grid reveal"><div><h3>Fully Customised Solutions</h3><ul><li>Built around your processes</li><li>Scalable smart factory design</li><li>Reduced complexity and delays</li><li>Faster ROI with global-ready setups</li></ul></div><div><h3>Technology Agnostic Expertise</h3><ul><li>Works with any PLC, SCADA or MES</li><li>Integrates modern and legacy systems</li><li>Strong capability in AI and robotics</li><li>No vendor bias — only what works</li></ul></div><div><h3>True End-to-End Partnership</h3><ul><li>Ownership from concept to go-live</li><li>Transparent planning and documentation</li><li>Onsite + remote delivery</li><li>KPI-driven performance and training</li></ul></div></div></section></>}
-
-function About(){return <section className="section about" id="about"><div className="about-stamp reveal"><Sparkles size={20}/><span>FUTURIC<br/>EST. 2025</span></div><div className="about-copy reveal"><div className="eyebrow">UNMISTAKABLE CRAFTSMANSHIP</div><h2>We reject<br/><em>the noise.</em></h2><p>Futuric represents the absolute peak of modern enterprise execution. Our ethos is built upon clarity, engineering superiority and breathtaking aesthetic delivery.</p><p>Whether optimising autonomous robotics floors beneath the NEXA banner, or constructing the framework behind a luxury lifestyle with HardRock, the structural DNA remains identical: <strong>we build for the future.</strong></p></div></section>}
-
-function Leadership(){return <section className="section dark-section" id="leadership"><div className="section-head reveal"><div><div className="eyebrow">OUR TEAM</div><h2>Who leads<br/><em>the vision.</em></h2></div><p>Leadership and technical ownership combine to turn ambitious industrial programs into measurable, scalable outcomes.</p></div><div className="lead-grid reveal">{leadership.map(([n,r,d])=><article key={n}><div className="portrait">{n.split(' ').map(x=>x[0]).slice(0,2).join('')}</div><div><h3>{n}</h3><span>{r}</span><p>{d}</p></div></article>)}</div></section>}
-
-function GlobalNetwork(){const places=['Perth, Australia','Melbourne, Australia','Dubai, UAE','Sharjah, UAE','Abu Dhabi, UAE','Doha, Qatar','Riyadh, KSA','Bangalore, India']; return <section className="section network"><div className="section-head reveal"><div><div className="eyebrow">GLOBAL NETWORK</div><h2>Where innovation<br/><em>connects globally.</em></h2></div><p>Wherever innovation demands precision, our global network delivers industry-ready smart factory systems built on deep regional insight.</p></div><div className="world-grid reveal"><div className="world-visual"><div className="world-ring r1"></div><div className="world-ring r2"></div><div className="world-core">F</div>{places.map((p,i)=><span className={'dot d'+i} key={p}></span>)}</div><div className="places">{places.map((p,i)=><div key={p}><span>0{i+1}</span><MapPin size={15}/><b>{p}</b></div>)}</div></div></section>}
-
-function Contact(){return <section className="contact" id="contact"><div className="contact-grid"></div><div className="contact-inner reveal"><div className="eyebrow">YOUR NEXT ADVANTAGE STARTS HERE</div><h2>Let's build the factory<br/>you've imagined — <em>with the performance you've never experienced.</em></h2><div className="contact-actions"><a className="btn primary" href="mailto:hello@futuric.com.au">Start a conversation <ArrowUpRight size={17}/></a><a className="btn ghost light" href="tel:+61469129200">Call Australia</a></div></div></section>}
-
-function Footer(){return <footer><div className="footer-main"><div><div className="brand footer-brand">futuric<span>.</span></div><p>Building intelligent industrial ecosystems and high-end enterprise ventures.</p></div><div><h4>Explore</h4><a href="#ventures">Ventures</a><a href="#nexa">NEXA</a><a href="#about">About</a><a href="#leadership">Leadership</a></div><div><h4>Contact</h4><a href="mailto:hello@futuric.com.au"><Mail size={15}/> hello@futuric.com.au</a><a href="tel:+61469129200"><Phone size={15}/> +61 469 129 200</a><span><MapPin size={15}/> Perth, Western Australia</span><span><MapPin size={15}/> Onyx Tower, Dubai, UAE</span></div></div><div className="footer-bottom"><span>© Futuric Pty Ltd · ABN 27692 201 166 · ACN 692 201 166</span><span>Australia · UAE · Qatar · KSA · India</span></div></footer>}
-
-function App(){useReveal(); return <><Nav/><main><Hero/><Ventures/><Nexa/><About/><Leadership/><GlobalNetwork/><Contact/></main><Footer/></>}
-
-createRoot(document.getElementById('root')).render(<App/>);
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
