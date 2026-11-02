@@ -1,75 +1,71 @@
-import { useRef, useState } from 'react'
-import { useGSAP } from '@gsap/react'
-import { gsap, reducedMotion } from '../lib/motion'
+import { Component, lazy, Suspense, useEffect, useState } from 'react'
+import { Reveal } from 'cube-motion/react'
 import { ventures } from '../lib/content'
 
 const v = ventures[3]
-// Each hotspot sits on the part of the room it controls (percent of the section).
-const spots = [
-  { id: 'Lighting', x: '62%', y: '11%' },
-  { id: 'Climate', x: '76%', y: '32%' },
-  { id: 'Entertainment', x: '58%', y: '66%' },
-  { id: 'Security', x: '92%', y: '56%' },
-]
-const systems = ['Lighting', 'Climate', 'Security', 'Entertainment', 'Automation']
+const SmartHome3D = lazy(() => import('@/components/ui/smart-home-3d'))
+// The order the arrival plays: the door opens, the lights come on, the music starts, the AC runs.
+const systems = ['Security', 'Lighting', 'Entertainment', 'Climate']
+const WIDE = '(min-width: 961px)'
 
-// ghost.ai's kitchen with hotspots, as a HardRock living room whose lights come on as you arrive.
+// If WebGL or the chunk fails, the section keeps its copy and the living-room photograph.
+class Fallback extends Component {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() { return this.state.failed ? this.props.still : this.props.children }
+}
+
+function useWide() {
+  const [wide, setWide] = useState(() => window.matchMedia(WIDE).matches)
+  useEffect(() => {
+    const mq = window.matchMedia(WIDE)
+    const on = () => setWide(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  return wide
+}
+
+// HardRock as one machine you can spin: four systems on one line, playing an arrival in order.
 export default function HardRock() {
-  const root = useRef(null)
-  const [on, setOn] = useState(new Set(['Lighting', 'Climate', 'Security', 'Automation']))
+  const [active, setActive] = useState(0)
+  const [jump, setJump] = useState(0)
+  const wide = useWide()
 
-  useGSAP(() => {
-    if (reducedMotion()) { gsap.set('.hardrock .dim', { opacity: 0.25 }); return }
-    const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: 'top 70%', end: 'bottom bottom', scrub: 0.6 } })
-    tl.fromTo('.hardrock .dim', { opacity: 0.85 }, { opacity: 0.25, ease: 'none' }, 0)
-      .from('.hotspot', { y: 20, opacity: 0, stagger: 0.15, ease: 'power2.out' }, 0.2)
-    // The room drifts and settles toward the window as the section passes.
-    gsap.fromTo('.room picture', { scale: 1.12, xPercent: -2 }, {
-      scale: 1, xPercent: 0, ease: 'none',
-      scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom bottom', scrub: true },
-    })
-  }, { scope: root })
+  // A tab or a module in the scene restarts the arrival from that system.
+  const pick = (i) => {
+    setActive(i)
+    setJump((n) => n + 1)
+  }
 
-  const toggle = (id) => setOn((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
+  const still = (
+    <img className="hr-still" src="/img/hardrock-living-1344.webp" width="1344" height="752" loading="lazy" alt="A HardRock living room at dusk with warm cove lighting." />
+  )
 
   return (
-    <section
-      className="hardrock dark"
-      id="hardrock"
-      data-theme="dark"
-      data-lights={on.has('Lighting') ? 'on' : 'off'}
-      ref={root}
-      aria-labelledby="hr-h"
-    >
-      {/* Higgsfield still: dusk living room, cove lights, windows over a river city. */}
-      <figure className="room" data-slot="hardrock-room">
-        <picture>
-          <source type="image/webp" srcSet="/img/hardrock-living-800.webp 800w, /img/hardrock-living-1344.webp 1344w" sizes="100vw" />
-          <img
-            src="/img/hardrock-living-1344.jpg"
-            width="1344"
-            height="752"
-            loading="lazy"
-            alt="A dark living room at dusk with warm cove lighting and tall windows over a river city skyline."
-          />
-        </picture>
-      </figure>
-      <div className="dim" />
+    <section className="hardrock ghost-ground" id="hardrock" data-theme="light" aria-labelledby="hr-h">
+      <div className="connect-grid" aria-hidden="true" />
+      <div className="hr-stage">
+        <Fallback still={still}>
+          <Suspense fallback={null}>
+            <SmartHome3D active={active} jump={jump} onStep={setActive} onPick={pick} wide={wide} />
+          </Suspense>
+        </Fallback>
+      </div>
 
-      <div className="copy">
+      <Reveal targets="children" className="copy">
         <h2 className="h2" id="hr-h">{v.line}</h2>
         <p className="lede">HardRock: {v.body.charAt(0).toLowerCase() + v.body.slice(1)}</p>
-      </div>
+      </Reveal>
 
-      {spots.map((s) => (
-        <button key={s.id} className="hotspot" style={{ left: `min(${s.x}, calc(100% - 150px))`, top: s.y }} aria-pressed={on.has(s.id)} onClick={() => toggle(s.id)}>
-          <span className="pip" aria-hidden="true" />{s.id}
-        </button>
-      ))}
-
-      <div className="systems" aria-label="HardRock systems">
-        {systems.map((s) => <span key={s} className={on.has(s) ? 'on' : ''}>{s}</span>)}
+      <div className="systems" role="tablist" aria-label="HardRock systems, in the order they come on">
+        {systems.map((s, i) => (
+          <button key={s} role="tab" aria-selected={i === active} className={i === active ? 'on' : ''} onClick={() => pick(i)}>
+            <i aria-hidden="true" />{s}
+          </button>
+        ))}
       </div>
+      <p className="hr-hint" aria-hidden="true">Drag to turn the house</p>
     </section>
   )
 }

@@ -477,26 +477,30 @@ h1, h2, h3, p { margin: 0; }
 .am-place p { color: var(--ink-600); }
 .am-faq { padding: 0; }
 
-/* ---------- HardRock ---------- */
-.hardrock { position: relative; height: 100svh; overflow: hidden; }
-.room { position: absolute; inset: 0; margin: 0; overflow: hidden; }
-.room picture { position: absolute; inset: 0; display: block; transform-origin: 80% 40%; }
-.room img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; transition: filter 0.9s var(--ease); }
-.hardrock[data-lights='off'] .room img { filter: brightness(0.45); }
-.dim { position: absolute; inset: 0; background: var(--ink-900); pointer-events: none; }
-.hardrock .copy {
-  position: absolute; left: var(--gutter); top: 120px; z-index: 3; display: grid; gap: 22px; max-width: min(820px, 52%);
-}
-.hotspot {
-  position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px;
-  background: var(--paper); color: var(--ink-900); padding: 8px 14px 8px 10px;
-  font-size: 15px; font-weight: 600; border: 0;
-}
-.hotspot .pip { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-600); transition: background-color 0.3s var(--ease); }
-.hotspot[aria-pressed='true'] .pip { background: var(--accent); }
-.hardrock .systems { position: absolute; left: var(--gutter); right: var(--gutter); bottom: var(--gutter); z-index: 3; display: flex; flex-wrap: wrap; gap: 10px; }
-.hardrock .systems span { background: var(--ink-900); color: var(--mute); padding: 10px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; transition: background-color 0.3s var(--ease), color 0.3s var(--ease); }
-.hardrock .systems span.on { background: var(--paper); color: var(--ink-900); }
+/* ---------- HardRock: the home as one machine (components/ui/smart-home-3d.jsx) ---------- */
+.hardrock { position: relative; height: max(100svh, 680px); overflow: hidden; }
+.hr-stage { position: absolute; inset: 0; }
+.hr-still { width: 100%; height: 100%; object-fit: cover; }
+.hardrock .copy { position: absolute; z-index: 2; left: var(--gutter); top: clamp(110px, 16vh, 170px); width: min(38%, 520px); display: grid; gap: 22px; pointer-events: none; }
+.hardrock .copy .lede { color: var(--ink-600); }
+.hardrock .systems { position: absolute; z-index: 3; left: var(--gutter); bottom: var(--gutter); display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 4px; border-radius: 100px; background: var(--paper-2); }
+.hardrock .systems button { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 100px; padding: 10px 16px; background: none; color: var(--ink-600); font: 500 14px/1 var(--font); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
+.hardrock .systems button i { width: 6px; height: 6px; border-radius: 50%; background: var(--mute); transition: background-color 0.35s var(--ease); }
+.hardrock .systems button:hover { color: var(--ink-900); }
+.hardrock .systems button.on { background: var(--accent); color: #fff; }
+.hardrock .systems button.on i { background: #fff; }
+.hr-hint { position: absolute; z-index: 2; right: var(--gutter); bottom: calc(var(--gutter) + 12px); margin: 0; font-size: 13px; color: var(--ink-600); pointer-events: none; }
+
+.smart-home-3d { position: absolute; inset: 0; }
+.smart-home-3d .sh-scene, .smart-home-3d canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.smart-home-3d canvas { opacity: 0; transition: opacity 1s var(--ease); }
+.smart-home-3d.sh-ready canvas { opacity: 1; }
+.sh-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.sh-label { position: absolute; left: 0; top: 0; display: grid; grid-template-columns: auto auto; column-gap: 8px; row-gap: 3px; align-items: baseline; padding: 8px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(18, 21, 26, 0.08); box-shadow: 0 6px 24px rgba(18, 21, 26, 0.12); white-space: nowrap; font-size: 13px; transition: border-color 0.35s var(--ease), background-color 0.35s var(--ease); will-change: transform; }
+.sh-label .sh-n { color: var(--accent); font-size: 11px; font-weight: 600; }
+.sh-label strong { font-weight: 600; color: var(--ink-900); }
+.sh-label small { grid-column: 2; color: var(--ink-600); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.sh-label.on { border-color: var(--accent); background: #fff; }
 
 /* ---------- Oryx ---------- */
 .oryx-wrap { overflow: hidden; }
@@ -609,12 +613,16 @@ h1, h2, h3, p { margin: 0; }
   .nexa-frame { display: grid; }
   .nexa .copy { position: static; width: auto; padding: 28px 22px 4px; }
   .nexa .fig-nexa { border: 0; border-radius: 0; }
-  .room img { object-position: 70% 50%; }
-  .hardrock .copy { right: var(--gutter); max-width: none; }
+  .hardrock { height: auto; min-height: 0; display: grid; }
+  .hardrock .copy { position: static; order: -1; width: auto; padding: 96px var(--gutter) 0; }
+  .hr-stage { position: relative; height: min(118vw, 620px); }
+  .hardrock .systems { position: relative; left: auto; bottom: auto; justify-self: start; margin: 0 var(--gutter) 40px; border-radius: 22px; }
+  .hr-hint { display: none; }
+  .sh-label { font-size: 11px; padding: 6px 9px; }
+  .sh-label small { display: none; }
   .footer .cols { grid-template-columns: 1fr 1fr; }
   .footer .say { grid-column: span 2; }
   .rail { display: none; }
-  .hotspot { font-size: 14px; }
 }
 
 @media (max-width: 600px) {
