@@ -56,3 +56,7 @@ export const augmindThoughts = [
   { state: 'Understanding', text: 'Conveyor 2 paused for 11 minutes after a jam sensor tripped.' },
   { state: 'Responding', text: 'Output was back on target by 14:20. No action needed.' },
 ]
+
+// Open roles for /careers. Empty for now; add one object per role and the page lists it, e.g.
+// { title: 'Industrial IoT Engineer', team: 'Engineering', location: 'Perth', type: 'Full time' }
+export const roles = []

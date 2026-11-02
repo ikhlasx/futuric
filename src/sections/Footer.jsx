@@ -39,9 +39,12 @@ export default function Footer() {
         <div>
           <h2>Company</h2>
           <ul>
-            {[['about', 'About'], ['careers', 'Careers'], ['faq', 'FAQ']].map(([id, label]) => (
+            <li><a href="/about">About</a></li>
+            <li><a href="/careers">Careers</a></li>
+            {[['faq', 'FAQ']].map(([id, label]) => (
               <li key={id}><a href={`#${id}`} onClick={(e) => { e.preventDefault(); scrollToId(id) }}>{label}</a></li>
             ))}
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>

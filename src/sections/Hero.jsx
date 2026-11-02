@@ -49,7 +49,7 @@ export default function Hero() {
           <a className="btn" href="#connect" onClick={(e) => { e.preventDefault(); scrollToId('connect') }}>
             Explore ventures <span className="arrow" aria-hidden="true">→</span>
           </a>
-          <a className="btn ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId('contact') }}>
+          <a className="btn ghost" href="/contact">
             Build with us
           </a>
         </div>
