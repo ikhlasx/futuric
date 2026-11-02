@@ -229,82 +229,65 @@ h1, h2, h3, p { margin: 0; }
   filter: blur(70px) saturate(0.35); opacity: 0.6;
 }
 .statement p { position: relative; max-width: 860px; font-size: clamp(24px, 2.3vw, 34px); line-height: 1.32; letter-spacing: -0.015em; }
-.statement .w { color: rgba(18, 21, 26, 0.2); transition: color 0.3s linear; }
-.statement .w.on { color: var(--ink-900); }
+.statement .w { color: var(--ink-900); opacity: 0; filter: blur(6px); transition: opacity 0.45s var(--ease), filter 0.45s var(--ease); }
+.statement .w.on { opacity: 1; filter: none; }
 
 /* ---------- one group, five parts: photo carousel ---------- */
-.parts { padding: clamp(96px, 12vh, 160px) 0 var(--section-gap); }
-.parts .head { display: grid; justify-items: center; gap: 18px; text-align: center; padding: 0 var(--gutter); }
-.parts .head p { max-width: 560px; color: var(--ink-600); font-size: 17px; }
-.parts .cards {
-  display: flex; gap: 16px; overflow-x: auto; padding: 56px var(--gutter) 6px;
-  scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; cursor: grab;
-  touch-action: pan-x pan-y;
-}
-.parts .cards::-webkit-scrollbar { display: none; }
-.parts .card {
-  position: relative; flex: 0 0 min(620px, 84vw); aspect-ratio: 620 / 420; border-radius: 32px; overflow: hidden;
-  scroll-snap-align: start; background: var(--ink-700); text-decoration: none; user-select: none;
-}
-.parts .card picture, .parts .card img { display: block; width: 100%; height: 100%; }
-.parts .card img { object-fit: cover; transition: transform 1.2s var(--ease); }
-.parts .card:hover img { transform: scale(1.04); }
-.parts .lab {
-  position: absolute; left: 18px; bottom: 18px; padding: 9px 15px; border-radius: 100px;
-  background: rgba(232, 232, 237, 0.86); color: var(--ink-900); font-size: 14px; font-weight: 500;
-  transition: transform 0.35s var(--pop);
-}
-.parts .card:hover .lab { transform: translateY(-3px); }
-.forma-face { position: absolute; inset: 0; background: var(--ink-850); color: var(--paper); padding: 34px 36px; display: grid; align-content: start; gap: 10px; }
-.forma-face .t { font-size: 15px; font-weight: 500; color: var(--mute); }
-.forma-face .big { font-size: clamp(48px, 6vw, 84px); font-weight: 400; letter-spacing: -0.03em; line-height: 1; }
-.forma-face .big small { font-size: 16px; color: var(--mute); letter-spacing: 0; }
-.forma-face .bars { display: flex; align-items: flex-end; gap: 8px; height: 38%; margin-top: 18px; }
-.forma-face .bars i { flex: 1; background: var(--accent); }
-.parts .hint { display: flex; align-items: center; gap: 16px; padding: 18px var(--gutter) 0; color: var(--ink-600); font-size: 13px; }
-.parts .hint::before, .parts .hint::after { content: ''; flex: 1; height: 1px; background: rgba(18, 21, 26, 0.14); } /* airform hint hairline, user-requested reference; taste-skill-ignore */
-.parts .points { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); padding: 80px var(--gutter) 0; }
-.parts .points > div { border-top: 1px solid rgba(18, 21, 26, 0.16); padding-top: 18px; } /* airform numeral hairline, user-requested reference; taste-skill-ignore */
-.parts .num { display: block; font-size: 40px; font-weight: 300; line-height: 1; color: var(--mute); }
-.parts .points h3 { margin: 20px 0 10px; font-size: 22px; font-weight: 400; line-height: 1.2; }
-.parts .points p { color: var(--ink-600); font-size: 16px; max-width: 36ch; }
 
-/* ---------- NEXA pinned exploded view ---------- */
-.nexa { position: relative; }
-.nexa .pin {
-  height: 100svh; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter);
-  align-items: center; padding: 100px var(--gutter) 48px;
-}
-.nexa .copy { display: grid; gap: 28px; }
+/* ---------- NEXA: one blueprint frame, copy laid over the factory floor ---------- */
+.nexa { position: relative; padding: 96px var(--gutter) 56px; }
 /* ghost.ai's blueprint ground and tab strip */
 .blueprint {
   background-color: var(--blueprint); color: var(--ink-900);
   background-image: linear-gradient(var(--blueprint-line) 1px, transparent 1px), linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px); /* ghost.ai blueprint grid, user-requested reference; taste-skill-ignore */
   background-size: 56px 56px; background-position: -1px -1px;
 }
+.nexa-frame { position: relative; max-width: 1360px; margin: 0 auto; }
+.nexa .copy { position: absolute; z-index: 1; top: 64px; left: clamp(28px, 3.4vw, 52px); width: min(36%, 440px); display: grid; gap: 24px; }
+.nexa .copy .lede { color: var(--ink-600); }
 .nexa .steps { list-style: none; margin: 0; padding: 4px; display: inline-flex; flex-wrap: wrap; gap: 2px; border-radius: 100px; background: var(--paper-2); justify-self: start; }
-.nexa .steps li { padding: 9px 15px; border-radius: 100px; font-size: 14px; font-weight: 500; color: var(--ink-600); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
-.nexa .steps li.done { color: var(--ink-900); }
+.nexa .steps li { padding: 8px 14px; border-radius: 100px; font-family: var(--font-sans, inherit); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink-600); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
 .nexa .steps li.on { background: var(--signal); color: #fff; }
-.nexa-shot {
-  position: relative; margin: 0; justify-self: end;
-  height: min(80svh, 760px); aspect-ratio: 880 / 1168; max-width: 100%;
-  overflow: hidden; background: var(--ink-700); border-radius: 22px;
+.nexa-figure { position: relative; width: 100%; }
+.nexa-still { width: 100%; height: auto; border-radius: 22px; }
+
+/* NEXA factory figure (components/ui/nexa-factory.jsx): Futuric blues on the blueprint look */
+.fig-nexa {
+  --ik-paper-light: #eef2f8; --ik-pen-light: #2f5d9c; --ik-live-light: #1f64d6; --ik-glow-light: #3fa0ff; --ik-accent-light: #d25c2e;
+  width: 100%; height: auto; padding: 18px 22px 16px;
 }
-.nexa-shot .cam { position: absolute; inset: 0; transform: scale(var(--s)); transform-origin: var(--ox) var(--oy); }
-.nexa-shot picture, .nexa-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.nexa-shot .dark { position: absolute; inset: 0; background: var(--ink-900); opacity: 0; }
-.nexa-shot .tag {
-  position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px;
-  transform: translate(-6px, -50%);
-  background: var(--ink-900); color: var(--paper); font-size: 14px; font-weight: 600;
-  padding: 7px 12px 7px 9px; white-space: nowrap;
-  opacity: 0; transition: opacity 0.45s var(--ease), translate 0.45s var(--ease);
-  translate: 0 8px;
-}
-.nexa-shot .tag.flip { transform: translate(calc(-100% + 6px), -50%); }
-.nexa-shot .tag.on { opacity: 1; translate: 0 0; }
-.nexa-shot .tag .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
+.fig-nexa .ik-footer .ik-cap { align-items: center; }
+.fig-nexa .ik-callout text { font-size: 9px; font-weight: 600; }
+.fig-nexa .ik-label { font-size: 6px; }
+/* micro-animations */
+.fig-nexa .nx-lane { opacity: 0.55; }
+.fig-nexa .nx-link { fill: none; stroke: var(--accent); stroke-width: 0.8; stroke-dasharray: 2 3; opacity: 0.35; vector-effect: non-scaling-stroke; }
+.fig-nexa .nx-particle { fill: var(--accent); }
+.fig-nexa .nx-data { fill: var(--signal); }
+.fig-nexa .nx-tote { fill: var(--accent-hi); transform-box: fill-box; transform-origin: 50% 100%; animation: nx-fill 0.45s var(--ease) both; }
+@keyframes nx-fill { from { transform: scaleY(0); opacity: 0; } }
+.fig-nexa .nx-track { fill: #22241f; opacity: 0.12; }
+.fig-nexa .nx-progress { fill: var(--accent); transform-box: fill-box; transform-origin: 0 50%; animation: nx-progress 2.4s linear both; }
+@keyframes nx-progress { from { transform: scaleX(0); } }
+.fig-nexa .nx-bar { fill: var(--accent); opacity: 0.75; transform-box: fill-box; transform-origin: 50% 100%; animation: nx-fill 0.5s var(--ease) both; }
+.fig-nexa .nx-pop { font-family: var(--ik-mono, monospace); font-size: 9px; font-weight: 700; fill: var(--accent); paint-order: stroke; stroke: #eef2f8; stroke-width: 3px; pointer-events: none; animation: nx-pop 1.5s var(--ease) both; }
+.fig-nexa .nx-pop.out { fill: var(--signal); }
+@keyframes nx-pop { 0% { opacity: 0; transform: translateY(4px); } 15%, 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px); } }
+.fig-nexa .nx-land { animation: nx-land 0.5s var(--ease) both; }
+@keyframes nx-land { from { opacity: 0; transform: translateY(-10px); } }
+.fig-nexa .nx-rollers { animation: nx-roll 0.6s steps(2) infinite; }
+@keyframes nx-roll { 50% { opacity: 0.55; } }
+.nx-belt { animation: nx-belt 8.4s linear infinite; }
+@keyframes nx-belt { 0% { transform: none; opacity: 0; } 6% { opacity: 1; } 92% { opacity: 1; } 100% { transform: translate(var(--mx), var(--my)); opacity: 0; } }
+.nx-dip { animation: nx-dip 2.1s var(--ease) infinite; }
+@keyframes nx-dip { 0%, 55%, 100% { transform: none; } 28% { transform: translate(var(--mx), var(--my)); } }
+.nx-shuttle { animation: nx-shuttle 5.2s ease-in-out infinite alternate; }
+@keyframes nx-shuttle { to { transform: translate(var(--mx), var(--my)); } }
+.nx-scan { animation: nx-scan 1.1s ease-in-out infinite; }
+@keyframes nx-scan { 0%, 100% { opacity: 0.15; } 50% { opacity: 1; } }
+.nx-blink { animation: nx-blink 1.6s steps(1) infinite; }
+@keyframes nx-blink { 50% { opacity: 0.2; } }
+.ik-plate:not([data-awake]) [class*="nx-"] { animation-play-state: paused; }
 
 /* ---------- AugMind ---------- */
 .augmind { position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: #8cbfe8; }
@@ -501,27 +484,31 @@ h1, h2, h3, p { margin: 0; }
 .gate picture { position: absolute; inset: 0; display: block; transform-origin: 72% 55%; }
 .gate img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
 .gate .copy { position: absolute; left: var(--gutter); top: clamp(110px, 14vh, 160px); z-index: 1; display: grid; gap: 22px; max-width: min(660px, 46%); color: var(--ink-900); }
-.oryx { padding: var(--section-gap) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); align-items: center; }
-.oryx .routes { display: grid; gap: 24px; }
-.oryx .places { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
-.oryx .places button { background: none; border: 0; padding: 0; text-align: left; font-size: clamp(32px, 3.8vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink-600); transition: color 0.3s var(--ease), transform 0.4s var(--ease); }
-.oryx .places button:hover, .oryx .places button.on { color: var(--paper); transform: translateX(8px); }
-.globe { width: 100%; aspect-ratio: 1; }
-.globe .arc { fill: none; stroke: var(--accent-hi); stroke-width: 2; }
-.globe .pt { fill: var(--paper); }
+.oryx { position: relative; isolation: isolate; padding: clamp(48px, 8vw, 120px) var(--gutter); display: grid; place-items: center; background: #f6f6f4; }
+.oryx::before { /* film grain, as on the AugMind sky */
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* cobe globe (components/ui/cobe-globe.jsx) */
+.cobe-globe { position: relative; width: min(100%, 760px); aspect-ratio: 1; user-select: none; }
+.cobe-globe canvas { width: 100%; height: 100%; cursor: grab; opacity: 0; transition: opacity 1.2s var(--ease); border-radius: 50%; touch-action: pan-y; }
+.cobe-pin { position: absolute; bottom: anchor(top); left: anchor(center); translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; opacity: var(--seen); filter: blur(calc((1 - var(--seen)) * 8px)); transition: opacity 0.3s, filter 0.3s; }
+@supports not (position-anchor: --a) { .cobe-pin { display: none; } }
+.cobe-name { font-size: 12px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; color: var(--ink-900); background: #fff; border: 1px solid var(--paper); box-shadow: 0 1px 3px rgba(18, 21, 26, 0.14); padding: 3px 9px; border-radius: 100px; }
+.cobe-pin.home .cobe-name { color: #fff; background: var(--signal); border-color: var(--signal); }
+.cobe-pin.left .cobe-name { transform: translateX(calc(-50% - 4px)); }
+.cobe-pin.right .cobe-name { transform: translateX(calc(50% + 4px)); }
+.cobe-pin.up .cobe-name { order: -1; }
+.cobe-pyramid { position: relative; width: 12px; height: 12px; transform-style: preserve-3d; animation: cobe-spin 4s linear infinite; }
+.cobe-pyramid i { position: absolute; left: -0.5px; top: 0; width: 0; height: 0; border-left: 6.5px solid transparent; border-right: 6.5px solid transparent; border-bottom: 13px solid var(--accent-hi); transform-origin: center bottom; }
+.cobe-pyramid i:nth-child(1) { transform: rotateY(0deg) translateZ(4px) rotateX(19.5deg); }
+.cobe-pyramid i:nth-child(2) { transform: rotateY(120deg) translateZ(4px) rotateX(19.5deg); border-bottom-color: var(--accent); }
+.cobe-pyramid i:nth-child(3) { transform: rotateY(240deg) translateZ(4px) rotateX(19.5deg); border-bottom-color: var(--accent-lo); }
+.cobe-pyramid i:nth-child(4) { transform: rotateX(-90deg) rotateZ(60deg) translateY(4px); border-bottom-color: #1a3f80; }
+.cobe-pin.home .cobe-pyramid i { border-bottom-color: var(--signal); }
+.cobe-pin.home .cobe-pyramid i:nth-child(2n) { border-bottom-color: #a8441f; }
+@keyframes cobe-spin { from { transform: rotateX(20deg) rotateY(0deg); } to { transform: rotateX(20deg) rotateY(360deg); } }
 
-/* ---------- finale ---------- */
-.finale { position: relative; overflow: hidden; min-height: 112svh; padding: clamp(120px, 12vw, 180px) var(--gutter) 46svh; display: grid; justify-items: center; align-content: start; text-align: center; gap: 36px; }
-.finale .earth { position: absolute; inset: 0; margin: 0; }
-.finale .earth picture { position: absolute; inset: 0; display: block; transform-origin: 50% 100%; }
-.finale .earth img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
-.finale > *:not(.earth) { position: relative; z-index: 1; }
-.finale .lines { display: grid; gap: 6px; font-size: clamp(20px, 1.8vw, 28px); color: var(--ink-600); }
-.finale .lines p { transition: color 0.5s var(--ease); }
-.finale .lines p.on { color: var(--paper); }
-.finale .names { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; font-weight: 600; color: var(--mute); }
-.finale .names button { background: none; border: 0; padding: 0; transition: color 0.2s var(--ease); }
-.finale .names button:hover { color: var(--accent-hi); }
 
 /* ---------- careers + faq ---------- */
 .careers { padding: var(--section-gap) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); align-items: start; }
@@ -565,7 +552,19 @@ h1, h2, h3, p { margin: 0; }
   .connect-item, .connect-item img { animation: none; }
   .hero .rise { animation: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-  .nexa-shot .tag { opacity: 1; translate: 0 0; }
+  /* The factory's micro-loops are small and stay in place, so they keep running, like the clouds. */
+  .fig-nexa .nx-belt { animation: nx-belt 8.4s linear infinite !important; }
+  .fig-nexa .nx-dip { animation: nx-dip 2.1s ease infinite !important; }
+  .fig-nexa .nx-shuttle { animation: nx-shuttle 5.2s ease-in-out infinite alternate !important; }
+  .fig-nexa .nx-scan { animation: nx-scan 1.1s ease-in-out infinite !important; }
+  .fig-nexa .nx-blink { animation: nx-blink 1.6s steps(1) infinite !important; }
+  .fig-nexa .nx-rollers { animation: nx-roll 0.6s steps(2) infinite !important; }
+  .fig-nexa .nx-tote, .fig-nexa .nx-bar { animation: nx-fill 0.45s ease both !important; }
+  .fig-nexa .nx-progress { animation: nx-progress 2.4s linear both !important; }
+  .fig-nexa .nx-pop { animation: nx-pop 1.5s ease both !important; }
+  .fig-nexa .nx-land { animation: nx-land 0.5s ease both !important; }
+  .cobe-pyramid { animation: cobe-spin 4s linear infinite !important; }
+  .statement .w { transition-duration: 0.45s !important; }
 }
 
 /* ---------- tablet / phone ---------- */
@@ -581,15 +580,15 @@ h1, h2, h3, p { margin: 0; }
   .nav .end { gap: 8px; }
   .nav .menu-btn { display: inline-flex; }
   .nav .end .btn.cta { display: none; }
-  .parts .points, .nexa .pin, .forma .head, .oryx, .careers, .products { grid-template-columns: 1fr; }
+  .forma .head, .careers, .products { grid-template-columns: 1fr; }
   .careers .join { position: static; }
-  .finale { min-height: 0; padding-bottom: 60vw; }
   .gate { height: auto; display: grid; }
   .gate picture { position: relative; aspect-ratio: 4 / 3; }
   .gate .copy { position: static; max-width: none; padding: 36px var(--gutter) 48px; color: var(--ink-900); background: var(--paper-2); }
-  .nexa .pin { height: auto; min-height: 100svh; padding-top: 88px; }
-  .nexa-shot { justify-self: stretch; height: auto; width: 100%; }
-  .nexa-shot .tag { font-size: 13px; padding: 6px 10px 6px 8px; }
+  .nexa { padding-top: 88px; }
+  .nexa-frame { display: grid; border-radius: 20px; background: #eef2f8; border: 1px solid var(--blueprint-line); overflow: hidden; }
+  .nexa .copy { position: static; width: auto; padding: 28px 22px 4px; }
+  .nexa .fig-nexa { border: 0; border-radius: 0; }
   .bench { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
   .bench .wide { grid-column: span 2; grid-row: auto; }
   .bench .tile { min-height: 260px; }

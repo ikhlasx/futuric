@@ -6,19 +6,21 @@ const text =
   'Futuric drives intelligent industrial ecosystems and high-performance ventures across Australia and the world. From the factory floor to the front door, we build the systems that run what comes next.'
 const words = text.split(' ')
 
-// airform's statement: words darken one by one as you scroll, over a blurred close-up of the Core.
+// airform's statement: hidden at first, the words appear one by one as you scroll,
+// over a blurred close-up of the Core.
 export default function Statement() {
   const root = useRef(null)
-  const [lit, setLit] = useState(reducedMotion() ? words.length : 2)
+  const [lit, setLit] = useState(0)
 
   useGSAP(() => {
-    if (reducedMotion()) return
-    gsap.timeline({
+    // The word reveal follows the scroll even with reduced motion: it fades in place, nothing travels.
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: root.current, start: 'top 75%', end: 'bottom 45%', scrub: true,
-        onUpdate: (s) => setLit(2 + Math.round(s.progress * (words.length - 2))),
+        trigger: root.current, start: 'top 70%', end: 'bottom 55%', scrub: true,
+        onUpdate: (s) => setLit(Math.round(s.progress * words.length)),
       },
-    }).fromTo('.statement .haze', { scale: 1.25, yPercent: -6 }, { scale: 1.05, yPercent: 6, ease: 'none' })
+    })
+    if (!reducedMotion()) tl.fromTo('.statement .haze', { scale: 1.25, yPercent: -6 }, { scale: 1.05, yPercent: 6, ease: 'none' })
   }, { scope: root })
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Morph } from 'cube-motion/react'
 import { ShaderBackground } from '@/components/ui/shader-background'
 import { reducedMotion } from '../lib/motion'
@@ -28,6 +28,8 @@ const tabs = [
   },
 ]
 
+const TURN = 2000 // ms each world stays up
+
 // Where the four objects sit around the Core, ghost.ai style (percent of the stage).
 const spots = [
   { x: 14, y: 30 },
@@ -49,6 +51,12 @@ export default function Connect() {
     setFlip((x) => !x)
     setActive(i)
   }
+
+  // Industry → Intelligence → Living → Mobility, on a loop.
+  useEffect(() => {
+    const id = setTimeout(() => choose((active + 1) % tabs.length), TURN)
+    return () => clearTimeout(id)
+  })
 
   return (
     <section className="connect" id="connect" data-theme="light" aria-labelledby="connect-h">

@@ -5,14 +5,12 @@ import Nav from './sections/Nav'
 import Rail from './sections/Rail'
 import Hero from './sections/Hero'
 import Statement from './sections/Statement'
-import Ventures from './sections/Ventures'
 import Nexa from './sections/Nexa'
 import AugMind from './sections/AugMind'
 import Forma from './sections/Forma'
 import Connect from './sections/Connect'
 import HardRock from './sections/HardRock'
 import Oryx from './sections/Oryx'
-import Finale from './sections/Finale'
 import Careers from './sections/Careers'
 import Footer from './sections/Footer'
 
@@ -52,14 +50,12 @@ export default function App() {
       <main id="main">
         <Hero />
         <Statement />
-        <Ventures />
+        <Connect />
         <Nexa />
         <AugMind />
         <Forma />
-        <Connect />
         <HardRock />
         <Oryx />
-        <Finale />
         <Careers />
       </main>
       <Footer />

@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="copy">
         <h1 id="hero-h" className="rise" style={{ '--d': '0.35s' }}>Building what comes next.<span>One group. Five ventures.</span></h1>
         <div className="actions rise" style={{ '--d': '0.5s' }}>
-          <a className="btn" href="#ventures" onClick={(e) => { e.preventDefault(); scrollToId('ventures') }}>
+          <a className="btn" href="#connect" onClick={(e) => { e.preventDefault(); scrollToId('connect') }}>
             Explore ventures <span className="arrow" aria-hidden="true">→</span>
           </a>
           <a className="btn ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId('contact') }}>
