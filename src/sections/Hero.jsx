@@ -1,65 +1,71 @@
-import { useRef } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap, reducedMotion, scrollToId } from '../lib/motion'
 
-const headline = ['Building', 'what', 'comes', 'next.']
+const CoreScene = lazy(() => import('../three/CoreScene'))
 
+// If WebGL is unavailable, keep the still Core instead of a blank hero.
+class Fallback extends Component {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() { return this.state.failed ? this.props.still : this.props.children }
+}
+
+// ghost.ai's dark hero with airform's giant wordmark: the Futuric Core splits into the five ventures.
 export default function Hero() {
   const root = useRef(null)
+  const track = useRef(null)
+  const progress = useRef(0)
+  const [inView, setInView] = useState(true)
+
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting))
+    io.observe(root.current)
+    return () => io.disconnect()
+  }, [])
 
   useGSAP(() => {
-    if (reducedMotion()) return
-    gsap.from('.word > span', {
-      yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.15,
-      // Masks are only needed while the words rise; drop them so nothing stays clipped.
-      onComplete: () => gsap.set('.hero h1 .word', { overflow: 'visible' }),
+    if (reducedMotion()) { progress.current = 1; return }
+    // The intro rise is CSS (see .hero .rise). The hero holds with CSS sticky inside a tall
+    // track rather than a GSAP pin, so the NEXA pin further down measures the page correctly.
+    track.current.classList.add('hold')
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: track.current, start: 'top top', end: 'bottom bottom', scrub: 1,
+        onUpdate: (s) => { progress.current = s.progress },
+      },
     })
-    gsap.from('.hero .rest > *', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08, delay: 0.55 })
-    // The frame opens upward while the picture settles from a slow push-in.
-    gsap.from('.hero .stage', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'expo.inOut', delay: 0.1 })
-    gsap.from('.hero .stage img', { scale: 1.18, duration: 2.4, ease: 'expo.out', delay: 0.1 })
-    // Parallax: the picture drifts inside its frame as the hero scrolls away.
-    gsap.to('.hero .stage picture', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true } })
+      .fromTo('.hero .wordmark-wrap', { opacity: 1, y: 0 }, { opacity: 0, y: -50, ease: 'none', duration: 0.4, immediateRender: false }, 0.3)
+      .to('.hero .horizon', { yPercent: -6, ease: 'none', duration: 1 }, 0)
   }, { scope: root })
 
+  const still = <div className="core-still" aria-hidden="true" />
+
   return (
-    <section className="hero light" id="top" data-theme="light" ref={root}>
-      <div className="copy">
-        <h1 className="display" aria-label="Building what comes next.">
-          {headline.map((w, i) => (
-            <span className="word" key={i} aria-hidden="true">
-              <span>{w}</span>{i < headline.length - 1 ? ' ' : ''}
-            </span>
-          ))}
-        </h1>
-        <div className="rest" style={{ display: 'grid', gap: 32 }}>
-          <p className="lede">
-            Futuric drives intelligent industrial ecosystems and high-performance ventures across Australia and the world.
-          </p>
-          <div className="actions">
-            <a className="btn" href="#nexa" onClick={(e) => { e.preventDefault(); scrollToId('nexa') }}>
-              Explore NEXA <span className="arrow" aria-hidden="true">→</span>
-            </a>
-            <a className="btn quiet" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId('contact') }}>
-              Let's build something intelligent
-            </a>
-          </div>
-        </div>
+    <div className="hero-track" id="top" ref={track}>
+    <section className="hero dark" data-theme="dark" ref={root} aria-labelledby="hero-h">
+      <div className="wordmark-wrap" aria-hidden="true"><span className="logo wordmark rise" /></div>
+      <div className="horizon" aria-hidden="true" />
+      <div className="canvas" aria-hidden="true">
+        <Fallback still={still}>
+          <Suspense fallback={still}>
+            <CoreScene progress={progress} active={inView} />
+          </Suspense>
+        </Fallback>
       </div>
 
-      {/* Higgsfield still: a person walking toward a monolith with a blue-lit doorway. */}
-      <figure className="stage" data-slot="hero-object">
-        <picture>
-          <source type="image/webp" srcSet="/img/hero-portal-640.webp 640w, /img/hero-portal-880.webp 880w" sizes="(max-width: 960px) 100vw, 36vw" />
-          <img
-            src="/img/hero-portal-880.jpg"
-            width="880"
-            height="1168"
-            alt="A lone person walks across a pale stone plain toward a tall graphite monolith with a doorway glowing blue."
-            fetchPriority="high"
-          />
-        </picture>
-      </figure>
+      <div className="copy">
+        <h1 id="hero-h" className="rise" style={{ '--d': '0.35s' }}>Building what comes next.<span>One group. Five ventures.</span></h1>
+        <div className="actions rise" style={{ '--d': '0.5s' }}>
+          <a className="btn" href="#ventures" onClick={(e) => { e.preventDefault(); scrollToId('ventures') }}>
+            Explore ventures <span className="arrow" aria-hidden="true">→</span>
+          </a>
+          <a className="btn ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId('contact') }}>
+            Build with us
+          </a>
+        </div>
+      </div>
     </section>
+    </div>
   )
 }

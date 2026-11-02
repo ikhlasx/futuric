@@ -21,7 +21,7 @@ const steps = [
 // Where a point lands once the picture is scaled by --s around the origin.
 const at = (v, o) => `calc(${o}% + (${v}% - ${o}%) * var(--s))`
 
-// ghost.ai's exploded view, retold: walk into the NEXA factory as it comes alive.
+// ghost.ai's exploded view on its blueprint grid: walk into the NEXA factory as it comes alive.
 export default function Nexa() {
   const root = useRef(null)
   const [step, setStep] = useState(-1)
@@ -48,13 +48,13 @@ export default function Nexa() {
   }, { scope: root })
 
   return (
-    <section className="nexa light-2" id="nexa" data-theme="light" ref={root} aria-labelledby="nexa-h">
+    <section className="nexa blueprint" id="nexa" data-theme="light" ref={root} aria-labelledby="nexa-h">
       <div className="pin">
         <div className="copy">
           <h2 className="h2" id="nexa-h">{nexa.line}</h2>
           <p className="lede">{nexa.body}</p>
           <ol className="steps" aria-label="How NEXA works">
-            {steps.map((s, i) => <li key={s.name} className={i <= step ? 'on' : ''}>{s.name}</li>)}
+            {steps.map((s, i) => <li key={s.name} className={i === step ? 'on' : i < step ? 'done' : ''} aria-current={i === step ? 'step' : undefined}>{s.name}</li>)}
           </ol>
           <div>
             <a className="btn ink" href={nexa.href} target="_blank" rel="noreferrer">

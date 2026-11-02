@@ -4,6 +4,7 @@ import { useActiveSection } from './lib/useActiveSection'
 import Nav from './sections/Nav'
 import Rail from './sections/Rail'
 import Hero from './sections/Hero'
+import Statement from './sections/Statement'
 import Ventures from './sections/Ventures'
 import Nexa from './sections/Nexa'
 import AugMind from './sections/AugMind'
@@ -17,8 +18,8 @@ import Footer from './sections/Footer'
 const themeOf = (el) => el.dataset.theme
 
 export default function App() {
-  // The nav takes the colour of whichever section sits under it.
-  const navTheme = useActiveSection('main > section, footer, [data-nav-over]', 40, themeOf) ?? 'light'
+  // The nav takes the colour of whichever section sits under it (pins wrap sections, so match any depth).
+  const navTheme = useActiveSection('main [data-theme], footer', 40, themeOf) ?? 'light'
 
   useEffect(() => initSmoothScroll(), [])
 
@@ -37,10 +38,15 @@ export default function App() {
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
+      <div className="grain" aria-hidden="true" />
+      <div className="signal-bar">
+        <a href="https://nexafuturic.com" target="_blank" rel="noreferrer">NEXA is live: smart factory transformation, operational today →</a>
+      </div>
       <Nav theme={navTheme} />
       <Rail />
       <main id="main">
         <Hero />
+        <Statement />
         <Ventures />
         <Nexa />
         <AugMind />
