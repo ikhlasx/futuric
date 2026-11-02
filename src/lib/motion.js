@@ -28,7 +28,11 @@ export function initSmoothScroll() {
 
 export function scrollToId(id) {
   const el = document.getElementById(id)
-  if (!el) return
+  // On another page (e.g. /augmind) the section lives on the home page.
+  if (!el) {
+    if (window.location.pathname !== '/') window.location.href = `/#${id}`
+    return
+  }
   if (lenis) lenis.scrollTo(el, { duration: 1.6 })
   else el.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' })
 }

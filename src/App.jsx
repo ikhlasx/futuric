@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { initSmoothScroll, ScrollTrigger } from './lib/motion'
+import { initSmoothScroll, ScrollTrigger, scrollToId } from './lib/motion'
 import { useActiveSection } from './lib/useActiveSection'
 import Nav from './sections/Nav'
 import Rail from './sections/Rail'
@@ -26,13 +26,17 @@ export default function App() {
 
   // Pins add height after other triggers measured; re-measure once layout and fonts settle.
   useEffect(() => {
+    // Arriving from another page with /#section: go there once the layout has settled.
+    const hash = window.location.hash.slice(1)
     const refresh = () => ScrollTrigger.refresh()
+    const toHash = hash ? setTimeout(() => scrollToId(hash), 450) : 0
     document.fonts.ready.then(refresh)
     window.addEventListener('load', refresh)
     const t = setTimeout(refresh, 300)
     return () => {
       window.removeEventListener('load', refresh)
       clearTimeout(t)
+      clearTimeout(toHash)
     }
   }, [])
 

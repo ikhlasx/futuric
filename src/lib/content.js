@@ -48,3 +48,11 @@ export const contact = {
   city: 'Perth, Western Australia',
   regions: ['Australia', 'UAE', 'Qatar', 'KSA', 'India'],
 }
+
+// AugMind narrating one question end to end. Sample exchange that matches the Forma demo data.
+export const augmindThoughts = [
+  { state: 'Listening', text: 'Why did Line 3 slow down at 14:00?' },
+  { state: 'Thinking', text: 'Reading the sensor log and the shift report.' },
+  { state: 'Understanding', text: 'Conveyor 2 paused for 11 minutes after a jam sensor tripped.' },
+  { state: 'Responding', text: 'Output was back on target by 14:20. No action needed.' },
+]

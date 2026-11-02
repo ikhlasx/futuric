@@ -2,20 +2,19 @@ import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap, reducedMotion, scrollToId } from '../lib/motion'
 
-const CoreScene = lazy(() => import('../three/CoreScene'))
+const RobotHero = lazy(() => import('@/components/ui/robot-hero'))
 
-// If WebGL is unavailable, keep the still Core instead of a blank hero.
+// If WebGL is unavailable, the hero keeps its wordmark and copy without the robot.
 class Fallback extends Component {
   state = { failed: false }
   static getDerivedStateFromError() { return { failed: true } }
-  render() { return this.state.failed ? this.props.still : this.props.children }
+  render() { return this.state.failed ? null : this.props.children }
 }
 
-// ghost.ai's dark hero with airform's giant wordmark: the Futuric Core splits into the five ventures.
+// ghost.ai's dark hero with airform's giant wordmark; the Futuric robot stands in front and
+// follows the cursor with its body and head.
 export default function Hero() {
   const root = useRef(null)
-  const track = useRef(null)
-  const progress = useRef(0)
   const [inView, setInView] = useState(true)
 
   useEffect(() => {
@@ -25,31 +24,21 @@ export default function Hero() {
   }, [])
 
   useGSAP(() => {
-    if (reducedMotion()) { progress.current = 1; return }
-    // The intro rise is CSS (see .hero .rise). The hero holds with CSS sticky inside a tall
-    // track rather than a GSAP pin, so the NEXA pin further down measures the page correctly.
-    track.current.classList.add('hold')
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: track.current, start: 'top top', end: 'bottom bottom', scrub: 1,
-        onUpdate: (s) => { progress.current = s.progress },
-      },
-    })
-      .fromTo('.hero .wordmark-wrap', { opacity: 1, y: 0 }, { opacity: 0, y: -50, ease: 'none', duration: 0.4, immediateRender: false }, 0.3)
-      .to('.hero .horizon', { yPercent: -6, ease: 'none', duration: 1 }, 0)
+    if (reducedMotion()) return
+    // The intro rise is CSS (see .hero .rise); scrolling away lifts the wordmark and the horizon.
+    gsap.timeline({ scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 1 } })
+      .fromTo('.hero .wordmark-wrap', { opacity: 1, y: 0 }, { opacity: 0, y: -60, ease: 'none', immediateRender: false }, 0)
+      .to('.hero .horizon', { yPercent: -8, ease: 'none' }, 0)
   }, { scope: root })
 
-  const still = <div className="core-still" aria-hidden="true" />
-
   return (
-    <div className="hero-track" id="top" ref={track}>
-    <section className="hero dark" data-theme="dark" ref={root} aria-labelledby="hero-h">
+    <section className="hero dark" id="top" data-theme="dark" ref={root} aria-labelledby="hero-h">
       <div className="wordmark-wrap" aria-hidden="true"><span className="logo wordmark rise" /></div>
       <div className="horizon" aria-hidden="true" />
-      <div className="canvas" aria-hidden="true">
-        <Fallback still={still}>
-          <Suspense fallback={still}>
-            <CoreScene progress={progress} active={inView} />
+      <div className="canvas rise" style={{ '--d': '0.15s' }} aria-hidden="true">
+        <Fallback>
+          <Suspense fallback={null}>
+            <RobotHero active={inView} reduced={reducedMotion()} />
           </Suspense>
         </Fallback>
       </div>
@@ -66,6 +55,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-    </div>
   )
 }
