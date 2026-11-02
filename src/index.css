@@ -223,11 +223,6 @@ h1, h2, h3, p { margin: 0; }
 /* ---------- statement: words darken on scroll ---------- */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .statement { position: relative; overflow: hidden; padding: clamp(140px, 22vh, 260px) var(--gutter); }
-.statement .haze {
-  position: absolute; inset: -12%;
-  background: url('/img/hero-portal-880.webp') 60% 40% / cover;
-  filter: blur(70px) saturate(0.35); opacity: 0.6;
-}
 .statement p { position: relative; max-width: 860px; font-size: clamp(24px, 2.3vw, 34px); line-height: 1.32; letter-spacing: -0.015em; }
 .statement .w { color: var(--ink-900); opacity: 0; filter: blur(6px); transition: opacity 0.45s var(--ease), filter 0.45s var(--ease); }
 .statement .w.on { opacity: 1; filter: none; }
@@ -247,7 +242,7 @@ h1, h2, h3, p { margin: 0; }
 .nexa .copy .lede { color: var(--ink-600); }
 .nexa .steps { list-style: none; margin: 0; padding: 4px; display: inline-flex; flex-wrap: wrap; gap: 2px; border-radius: 100px; background: var(--paper-2); justify-self: start; }
 .nexa .steps li { padding: 8px 14px; border-radius: 100px; font-family: var(--font-sans, inherit); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink-600); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
-.nexa .steps li.on { background: var(--signal); color: #fff; }
+.nexa .steps li.on { background: var(--accent); color: #fff; }
 .nexa-figure { position: relative; width: 100%; }
 .nexa-still { width: 100%; height: auto; border-radius: 22px; }
 
@@ -389,7 +384,9 @@ h1, h2, h3, p { margin: 0; }
 .scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent-hi); pointer-events: none; }
 
 /* ---------- everything we connect: ghost.ai's tabbed grid page on a drifting shader ---------- */
-.connect { position: relative; overflow: hidden; isolation: isolate; color: var(--ink-900); background: #d4d4d6;
+/* ghost.ai's shader ground and grid paper, shared by About, Connect and NEXA */
+.ghost-ground, .connect { position: relative; overflow: hidden; isolation: isolate; color: var(--ink-900); background: #d4d4d6; }
+.connect {
   padding: var(--section-gap) var(--gutter); display: grid; justify-items: center; gap: 28px; text-align: center; }
 .connect-bg { position: absolute; inset: 0; z-index: -2; }
 .connect-grid { position: absolute; inset: 0; z-index: -1; opacity: 0.8;

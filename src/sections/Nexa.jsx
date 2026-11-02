@@ -1,5 +1,7 @@
 import { Component, lazy, Suspense, useEffect, useState } from 'react'
 import { Reveal } from 'cube-motion/react'
+import { ShaderBackground } from '@/components/ui/shader-background'
+import { reducedMotion } from '../lib/motion'
 import { ventures } from '../lib/content'
 
 const nexa = ventures[0]
@@ -45,11 +47,15 @@ export default function Nexa() {
   )
 
   return (
-    <section className="nexa blueprint" id="nexa" data-theme="light" aria-labelledby="nexa-h">
+    <section className="nexa ghost-ground" id="nexa" data-theme="light" aria-labelledby="nexa-h">
+      <div className="connect-bg" aria-hidden="true">
+        <ShaderBackground still={reducedMotion()} />
+      </div>
+      <div className="connect-grid" aria-hidden="true" />
       <div className="nexa-frame">
         <Reveal targets="children" className="copy">
           <h2 className="h2" id="nexa-h">{nexa.line}</h2>
-          <p className="lede">{nexa.body} Every agent on the line runs its own task, and the hub keeps them in step.</p>
+          <p className="lede">Industrial AI and robotics, running on factory floors today.</p>
           <div>
             <a className="btn ink" href={nexa.href} target="_blank" rel="noreferrer">
               Visit nexafuturic.com <span className="arrow" aria-hidden="true">→</span>
