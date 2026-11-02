@@ -396,6 +396,40 @@ h1, h2, h3, p { margin: 0; }
 .ui-chat .src span { font-size: 13px; color: var(--mute); background: var(--ink-700); padding: 3px 9px; border-radius: 999px; }
 .scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent-hi); pointer-events: none; }
 
+/* ---------- everything we connect: ghost.ai's tabbed grid page on a drifting shader ---------- */
+.connect { position: relative; overflow: hidden; isolation: isolate; color: var(--ink-900); background: #d4d4d6;
+  padding: var(--section-gap) var(--gutter); display: grid; justify-items: center; gap: 28px; text-align: center; }
+.connect-bg { position: absolute; inset: 0; z-index: -2; }
+.connect-grid { position: absolute; inset: 0; z-index: -1; opacity: 0.8;
+  background-image: linear-gradient(#c3c4c9 1px, transparent 1px), linear-gradient(90deg, #c3c4c9 1px, transparent 1px); /* ghost.ai grid paper, user-requested reference; taste-skill-ignore */
+  background-size: 190px 190px; background-position: center; }
+.connect-tabs { display: inline-flex; gap: 2px; padding: 4px; border-radius: 100px; background: rgba(185, 204, 226, 0.75); }
+.connect-tabs button {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 100px; padding: 9px 16px;
+  background: none; color: #2f5d9c; font-size: 14px; font-weight: 500;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.connect-tabs button i { width: 7px; height: 7px; background: currentColor; opacity: 0; transition: opacity 0.3s var(--ease); }
+.connect-tabs button:hover { background: rgba(255, 255, 255, 0.4); }
+.connect-tabs button[aria-selected='true'] { background: var(--accent); color: #fff; }
+.connect-tabs button[aria-selected='true'] i { opacity: 1; }
+.connect-stage { position: relative; width: min(1120px, 100%); height: min(66vh, 600px); }
+.connect-core {
+  position: absolute; left: 50%; top: 50%; width: min(22%, 230px); height: 80%; transform: translate(-50%, -50%);
+  border-radius: 6px; background: linear-gradient(180deg, #e9e9ea 0%, #b9babd 34%, #5e6066 52%, #c9cacc 74%, #f1f1f2 100%); /* ghost.ai brushed core; taste-skill-ignore */
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 7%;
+}
+.connect-core .logo { width: 62%; aspect-ratio: 1182 / 95; color: rgba(18, 21, 26, 0.55); }
+.connect-item { position: absolute; margin: 0; width: clamp(110px, 15vw, 200px); transform: translate(-50%, -50%);
+  display: grid; justify-items: center; gap: 6px; animation: connect-in 0.9s var(--ease) var(--d, 0ms) both; }
+.connect-item img { width: 100%; height: auto; animation: bob 6s ease-in-out calc(var(--d, 0ms) * 3) infinite alternate; }
+.connect-item figcaption { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #4b4c51; }
+.connect-item figcaption i { width: 9px; height: 9px; box-shadow: inset 0 0 0 1.5px currentColor; } /* ghost.ai checkbox mark; taste-skill-ignore */
+@keyframes connect-in { from { opacity: 0; transform: translate(-50%, -38%) scale(0.92); } }
+@keyframes bob { to { transform: translateY(-10px) rotate(-2deg); } }
+.connect-line { max-width: 60ch; font-size: clamp(18px, 1.5vw, 22px); }
+.connect-line strong { font-weight: 600; }
+
 /* ---------- HardRock ---------- */
 .hardrock { position: relative; height: 100svh; overflow: hidden; }
 .room { position: absolute; inset: 0; margin: 0; overflow: hidden; }
@@ -482,6 +516,7 @@ h1, h2, h3, p { margin: 0; }
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .connect-item, .connect-item img { animation: none; }
   .hero .rise { animation: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   .nexa-shot .tag { opacity: 1; translate: 0 0; }
@@ -519,6 +554,10 @@ h1, h2, h3, p { margin: 0; }
 }
 
 @media (max-width: 600px) {
+  .connect-stage { height: 560px; }
+  .connect-core { width: 34%; height: 56%; }
+  .connect-item { width: 30vw; }
+  .connect-tabs { flex-wrap: wrap; justify-content: center; border-radius: 22px; }
   .bench { grid-template-columns: 1fr; }
   .bench .wide { grid-column: auto; }
   .ui-phone .screen { min-height: 260px; }

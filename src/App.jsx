@@ -9,6 +9,7 @@ import Ventures from './sections/Ventures'
 import Nexa from './sections/Nexa'
 import AugMind from './sections/AugMind'
 import Forma from './sections/Forma'
+import Connect from './sections/Connect'
 import HardRock from './sections/HardRock'
 import Oryx from './sections/Oryx'
 import Finale from './sections/Finale'
@@ -51,6 +52,7 @@ export default function App() {
         <Nexa />
         <AugMind />
         <Forma />
+        <Connect />
         <HardRock />
         <Oryx />
         <Finale />
