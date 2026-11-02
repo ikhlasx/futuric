@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Morph } from 'cube-motion/react'
-import { ShaderBackground } from '@/components/ui/shader-background'
-import { reducedMotion } from '../lib/motion'
 
 // Each tab: one Futuric venture's world, four things it connects. Images are quadrants of one
 // Higgsfield sheet per tab (public/img/connect-<tab>-<n>.webp).
@@ -60,9 +58,6 @@ export default function Connect() {
 
   return (
     <section className="connect" id="connect" data-theme="light" aria-labelledby="connect-h">
-      <div className="connect-bg" aria-hidden="true">
-        <ShaderBackground still={reducedMotion()} />
-      </div>
       <div className="connect-grid" aria-hidden="true" />
 
       <h2 className="h2" id="connect-h">Everything we connect.</h2>

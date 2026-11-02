@@ -1,7 +1,5 @@
 import { Component, lazy, Suspense, useEffect, useState } from 'react'
 import { Reveal } from 'cube-motion/react'
-import { ShaderBackground } from '@/components/ui/shader-background'
-import { reducedMotion } from '../lib/motion'
 import { ventures } from '../lib/content'
 
 const nexa = ventures[0]
@@ -48,9 +46,6 @@ export default function Nexa() {
 
   return (
     <section className="nexa ghost-ground" id="nexa" data-theme="light" aria-labelledby="nexa-h">
-      <div className="connect-bg" aria-hidden="true">
-        <ShaderBackground still={reducedMotion()} />
-      </div>
       <div className="connect-grid" aria-hidden="true" />
       <div className="nexa-frame">
         <Reveal targets="children" className="copy">

@@ -241,7 +241,7 @@ h1, h2, h3, p { margin: 0; }
 .nexa .copy { position: absolute; z-index: 1; top: 64px; left: clamp(28px, 3.4vw, 52px); width: min(36%, 440px); display: grid; gap: 24px; }
 .nexa .copy .lede { color: var(--ink-600); }
 .nexa .steps { list-style: none; margin: 0; padding: 4px; display: inline-flex; flex-wrap: wrap; gap: 2px; border-radius: 100px; background: var(--paper-2); justify-self: start; }
-.nexa .steps li { padding: 8px 14px; border-radius: 100px; font-family: var(--font-sans, inherit); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink-600); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
+.nexa .steps li { padding: 8px 14px; border-radius: 100px; font-family: var(--font); font-size: 14px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink-600); transition: background-color 0.35s var(--ease), color 0.35s var(--ease); }
 .nexa .steps li.on { background: var(--accent); color: #fff; }
 .nexa-figure { position: relative; width: 100%; }
 .nexa-still { width: 100%; height: auto; border-radius: 22px; }
@@ -250,10 +250,15 @@ h1, h2, h3, p { margin: 0; }
 .fig-nexa {
   --ik-paper-light: #eef2f8; --ik-pen-light: #2f5d9c; --ik-live-light: #1f64d6; --ik-glow-light: #3fa0ff; --ik-accent-light: #d25c2e;
   width: 100%; height: auto; padding: 18px 22px 16px;
+  /* the site's Hanken Grotesk for every caption, label and screen inside the figure */
+  --ik-mono: var(--font); --ik-screen-font: var(--font);
 }
+/* No panel or isometric grid: the factory sits straight on the section's grid paper. */
+.nexa .fig-nexa.ik-plate { background: transparent; border-color: transparent; }
+.fig-nexa .ik-grid { display: none; }
 .fig-nexa .ik-footer .ik-cap { align-items: center; }
-.fig-nexa .ik-callout text { font-size: 9px; font-weight: 600; }
-.fig-nexa .ik-label { font-size: 6px; }
+.fig-nexa .ik-callout text { font-family: var(--font); font-size: 10px; font-weight: 600; letter-spacing: 0.01em; }
+.fig-nexa .ik-label { font-size: 6.5px; letter-spacing: 0.04em; }
 /* micro-animations */
 .fig-nexa .nx-lane { opacity: 0.55; }
 .fig-nexa .nx-link { fill: none; stroke: var(--accent); stroke-width: 0.8; stroke-dasharray: 2 3; opacity: 0.35; vector-effect: non-scaling-stroke; }
@@ -265,7 +270,7 @@ h1, h2, h3, p { margin: 0; }
 .fig-nexa .nx-progress { fill: var(--accent); transform-box: fill-box; transform-origin: 0 50%; animation: nx-progress 2.4s linear both; }
 @keyframes nx-progress { from { transform: scaleX(0); } }
 .fig-nexa .nx-bar { fill: var(--accent); opacity: 0.75; transform-box: fill-box; transform-origin: 50% 100%; animation: nx-fill 0.5s var(--ease) both; }
-.fig-nexa .nx-pop { font-family: var(--ik-mono, monospace); font-size: 9px; font-weight: 700; fill: var(--accent); paint-order: stroke; stroke: #eef2f8; stroke-width: 3px; pointer-events: none; animation: nx-pop 1.5s var(--ease) both; }
+.fig-nexa .nx-pop { font-family: var(--font); font-size: 10px; font-weight: 700; fill: var(--accent); paint-order: stroke; stroke: #eef2f8; stroke-width: 3px; pointer-events: none; animation: nx-pop 1.5s var(--ease) both; }
 .fig-nexa .nx-pop.out { fill: var(--signal); }
 @keyframes nx-pop { 0% { opacity: 0; transform: translateY(4px); } 15%, 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px); } }
 .fig-nexa .nx-land { animation: nx-land 0.5s var(--ease) both; }
@@ -328,9 +333,16 @@ h1, h2, h3, p { margin: 0; }
   font: 600 15px/1 var(--font); transform-origin: center;
 }
 
-/* ---------- Forma ---------- */
-.forma { padding: var(--section-gap) var(--gutter); display: grid; gap: clamp(48px, 6vw, 96px); }
-.forma .head { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); align-items: end; }
+/* ---------- Forma: one product shot on the grid paper ---------- */
+.forma { padding: var(--section-gap) var(--gutter); display: grid; justify-items: center; gap: 36px; text-align: center; }
+.forma .head { display: grid; gap: 14px; justify-items: center; }
+.forma .head .lede { color: var(--ink-600); }
+.forma-shot { margin: 0; width: min(100%, 1280px); }
+.forma-shot img { display: block; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 24px 60px -28px rgba(18, 21, 26, 0.35); }
+
+/* ---------- Forma showcase (/forma page) ---------- */
+.forma-full { padding: calc(var(--section-gap) + 40px) var(--gutter) var(--section-gap); display: grid; gap: clamp(48px, 6vw, 96px); }
+.forma-full .head { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); align-items: end; }
 .bench { position: relative; display: grid; grid-template-columns: 1.3fr 1fr 0.75fr; grid-template-rows: 320px 280px; gap: 12px; overflow: hidden; }
 .bench .tile { position: relative; margin: 0; background: var(--ink-700); padding: 18px; display: grid; grid-template-rows: 1fr auto; gap: 14px; transition: background-color 0.5s var(--ease); min-width: 0; }
 .bench .tile.lit { background: var(--ink-600); }
@@ -383,12 +395,23 @@ h1, h2, h3, p { margin: 0; }
 .ui-chat .src span { font-size: 13px; color: var(--mute); background: var(--ink-700); padding: 3px 9px; border-radius: 999px; }
 .scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent-hi); pointer-events: none; }
 
+@media (max-width: 960px) {
+  .forma-full .head { grid-template-columns: 1fr; }
+  .bench { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .bench .wide { grid-column: span 2; grid-row: auto; }
+  .bench .tile { min-height: 260px; }
+}
+@media (max-width: 600px) {
+  .bench { grid-template-columns: 1fr; }
+  .bench .wide { grid-column: auto; }
+  .ui-phone .screen { min-height: 260px; }
+}
+
 /* ---------- everything we connect: ghost.ai's tabbed grid page on a drifting shader ---------- */
-/* ghost.ai's shader ground and grid paper, shared by About, Connect and NEXA */
+/* ghost.ai's grid paper, shared by About, Connect and NEXA */
 .ghost-ground, .connect { position: relative; overflow: hidden; isolation: isolate; color: var(--ink-900); background: #d4d4d6; }
 .connect {
   padding: var(--section-gap) var(--gutter); display: grid; justify-items: center; gap: 28px; text-align: center; }
-.connect-bg { position: absolute; inset: 0; z-index: -2; }
 .connect-grid { position: absolute; inset: 0; z-index: -1; opacity: 0.8;
   background-image: linear-gradient(#c3c4c9 1px, transparent 1px), linear-gradient(90deg, #c3c4c9 1px, transparent 1px); /* ghost.ai grid paper, user-requested reference; taste-skill-ignore */
   background-size: 190px 190px; background-position: center; }
@@ -577,18 +600,15 @@ h1, h2, h3, p { margin: 0; }
   .nav .end { gap: 8px; }
   .nav .menu-btn { display: inline-flex; }
   .nav .end .btn.cta { display: none; }
-  .forma .head, .careers, .products { grid-template-columns: 1fr; }
+  .careers, .products { grid-template-columns: 1fr; }
   .careers .join { position: static; }
   .gate { height: auto; display: grid; }
   .gate picture { position: relative; aspect-ratio: 4 / 3; }
   .gate .copy { position: static; max-width: none; padding: 36px var(--gutter) 48px; color: var(--ink-900); background: var(--paper-2); }
   .nexa { padding-top: 88px; }
-  .nexa-frame { display: grid; border-radius: 20px; background: #eef2f8; border: 1px solid var(--blueprint-line); overflow: hidden; }
+  .nexa-frame { display: grid; }
   .nexa .copy { position: static; width: auto; padding: 28px 22px 4px; }
   .nexa .fig-nexa { border: 0; border-radius: 0; }
-  .bench { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-  .bench .wide { grid-column: span 2; grid-row: auto; }
-  .bench .tile { min-height: 260px; }
   .room img { object-position: 70% 50%; }
   .hardrock .copy { right: var(--gutter); max-width: none; }
   .footer .cols { grid-template-columns: 1fr 1fr; }
@@ -602,7 +622,4 @@ h1, h2, h3, p { margin: 0; }
   .connect-core { width: 34%; height: 56%; }
   .connect-item { width: 30vw; }
   .connect-tabs { flex-wrap: wrap; justify-content: center; border-radius: 22px; }
-  .bench { grid-template-columns: 1fr; }
-  .bench .wide { grid-column: auto; }
-  .ui-phone .screen { min-height: 260px; }
 }
